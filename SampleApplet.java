@@ -6,7 +6,7 @@ public class SampleApplet extends Applet{
 
     public void paint(Graphics g){
         g.setColor(Color.red);
-        g.drawRect(10,10,100,100); //width 250, height 100
+        g.drawRect(200,100,500,500); //500 = 10ft; 50 = 1ft
         g.setColor(Color.blue);
         g.drawString("editings",10,50);
 
