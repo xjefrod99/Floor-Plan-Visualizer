@@ -8,7 +8,7 @@ public class SampleApplet extends Applet{
         g.setColor(Color.red);
         g.drawRect(10,10,100,100); //width 250, height 100
         g.setColor(Color.blue);
-        g.drawString("Trying this out",10,50);
+        g.drawString("editings",10,50);
 
     }
 }
