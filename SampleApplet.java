@@ -2,13 +2,18 @@ import java.applet.Applet;
 import java.awt.*;
 import java.io.*;
 
+
 public class SampleApplet extends Applet{
 
     public void paint(Graphics g){
-        g.setColor(Color.red);
-        g.drawRect(10,10,100,100); //width 250, height 100
-        g.setColor(Color.blue);
-        g.drawString("Trying this out",10,50);
+        //creating a new TwinXL bed
+        Twin Bed = new Twin();
+        //this is the room
+        g.setColor(Color.orange);
+        g.fillRect(200,100,500,500); //scale: 500 = 10ft; 50 = 1ft
+        
+        //drawing the twinXL bed at a specified location
+        Bed.BedPaint(g, 200, 100);
 
     }
 }
