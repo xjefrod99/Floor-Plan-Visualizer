@@ -4,6 +4,7 @@ import java.io.*;
 import java.awt.event.*;
 
 public class Twin extends Applet implements MouseMotionListener, MouseListener{
+    boolean clicked_on_bed = false;
     int locationx, locationy, mouseX, mouseY;
 
     public void init(int locx, int locy) {
@@ -29,23 +30,22 @@ public class Twin extends Applet implements MouseMotionListener, MouseListener{
         g.fillRect(locationx,locationy + 85,158,248);
     }
 
-    public void mouseMoved(MouseEvent e) {
-
-    }
+    public void mouseMoved(MouseEvent e) {}
     public void mouseDragged(MouseEvent e) {
-        mouseX = e.getX();
-        mouseY = e.getY();
+            mouseX = e.getX();
+            mouseY = e.getY();
+            showStatus( "Mouse at (" + mouseX + "," + mouseY + ")" );
+            clicked_on_bed = mouseX > locationx && mouseX < (locationx + 158) &&
+                            mouseY > locationy && mouseY < (locationy + 333);
+            if (clicked_on_bed){
+                System.out.println("on bed");
+            }
     }
-    public void mouseClicked(MouseEvent e) {
-    }
-    
+    public void mouseClicked(MouseEvent e) {}
     public void mouseEntered(MouseEvent e) {
+        System.out.println("on frame");
     }
-    
-    public void mouseExited(MouseEvent e) {
-    }
-    public void mouseReleased(MouseEvent e) {
-    }
-    public void mousePressed(MouseEvent e) {
-    }
+    public void mouseExited(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {}
 }
