@@ -5,6 +5,7 @@ import java.awt.event.*;
 
 public class SampleApplet extends Applet implements MouseMotionListener, MouseListener {
     boolean clicked_on_bed = false;
+    boolean clicked_in_room = false;
     int bedx, bedy, mouseX, mouseY;
 
     public void init() {
@@ -40,8 +41,11 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
         mouseY = e.getY();
         // showStatus("Mouse at (" + mouseX + "," + mouseY + ")");
         clicked_on_bed = mouseX > bedx && mouseX < (bedx + 158) && mouseY > bedy && mouseY < (bedy + 333);
-        if (clicked_on_bed) {
+        clicked_in_room = mouseX > 200 && mouseX < 542 && mouseY < 267 && mouseY > 100;
+        if (clicked_on_bed && clicked_in_room) {
             System.out.println("on bed");
+            // this if statement has to be changed bc it's currently hardcoded to the room's
+            // specs
             if (mouseX > 200 && mouseX < 542 && mouseY < 267 && mouseY > 100) {
                 bedx = mouseX;
                 bedy = mouseY;
