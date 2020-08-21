@@ -5,11 +5,11 @@ import java.awt.event.*;
 
 public class SampleApplet extends Applet implements MouseMotionListener, MouseListener {
     boolean clicked_on_bed = false;
-    int locationx, locationy, mouseX, mouseY;
+    int bedx, bedy, mouseX, mouseY;
 
-    public void init(int locx, int locy) {
-        locationx = locx;
-        locationy = locy;
+    public void init() {
+        bedx = 200;
+        bedy = 100;
         mouseX = 0;
         mouseY = 0;
         addMouseMotionListener(this);
@@ -17,10 +17,11 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
     }
 
     public void paint(Graphics g) {
+        // init();
         // creating a new TwinXL bed
         Twin Bed = new Twin();
-        Bed.init(200, 100);
-        init(200, 100);
+        Bed.init(bedx, bedy);
+        // init();
         // this is the room
         g.setColor(Color.orange);
         g.fillRect(200, 100, 500, 500); // scale: 500 = 10ft; 50 = 1ft
@@ -38,10 +39,14 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
         mouseX = e.getX();
         mouseY = e.getY();
         // showStatus("Mouse at (" + mouseX + "," + mouseY + ")");
-        clicked_on_bed = mouseX > locationx && mouseX < (locationx + 158) && mouseY > locationy
-                && mouseY < (locationy + 333);
+        clicked_on_bed = mouseX > bedx && mouseX < (bedx + 158) && mouseY > bedy && mouseY < (bedy + 333);
         if (clicked_on_bed) {
             System.out.println("on bed");
+            if (mouseX > 200 && mouseX < 542 && mouseY < 267 && mouseY > 100) {
+                bedx = mouseX;
+                bedy = mouseY;
+            }
+            repaint();
         }
     }
 
