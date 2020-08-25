@@ -46,10 +46,10 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
             System.out.println("on bed");
             // this if statement has to be changed bc it's currently hardcoded to the room's
             // specs
-            if (mouseX > 200 && mouseX < 542 && mouseY < 267 && mouseY > 100) {
-                bedx = mouseX;
-                bedy = mouseY;
-            }
+            // if (mouseX > 200 && mouseX < 542 && mouseY < 267 && mouseY > 100) {
+            bedx = mouseX;
+            bedy = mouseY;
+            // }
             repaint();
         }
     }
