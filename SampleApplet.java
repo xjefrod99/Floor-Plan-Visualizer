@@ -5,25 +5,32 @@ import java.awt.event.*;
 
 public class SampleApplet extends Applet implements MouseMotionListener, MouseListener, KeyListener {
     boolean clicked_on_bed = false;
+    boolean clicked_on_desk = false;
     boolean clicked_in_room = false;
     boolean clicked_on_dresser = false;
-    int bedx, bedy, mouseX, mouseY, drex, drey;
+    int bedx, bedy, mouseX, mouseY, drex, drey, deskx, desky;
     int height = 500;
     int width = 600;
+    int originX = 100;
+    int originY = 100;
     int dresserWidth = 149;
     int dresserHeight = 95;
     int bedWidth = 158;
     int bedHeight = 333;
+    int deskWidth = 198;
+    int deskHeight = 105;
     public void init() {
-        bedx = 0;
-        bedy = 0;
+        bedx = originX+bedWidth/2;
+        bedy = originY+bedHeight/2;
+        drex = originX+width-dresserWidth/2;
+        drey = originY+height-dresserHeight/2;
+        deskx = originX+width-deskWidth/2;
+        desky = originY+deskHeight/2;
         mouseX = 0;
-        drex = width-dresserWidth;
-        drey = height - dresserHeight;
         mouseY = 0;
         addMouseMotionListener(this);
         addMouseListener(this);
-        setSize( width, height );
+        setSize((originX*2)+width, (originY*2)+height);
         setVisible( true );
     }
 
@@ -31,20 +38,27 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
         // init();
         // creating a new TwinXL bed
         Twin Bed = new Twin();
-        Bed.init(bedx, bedy);
+        Bed.init(bedx-bedWidth/2, bedy-bedHeight/2);
+        // init();
+        // creating a new TwinXL bed
+        Desk desk = new Desk();
+        desk.init(deskx-deskWidth/2, desky-deskHeight/2);
+
+        Dresser drawers = new Dresser();
+        drawers.init(drex-dresserWidth/2, drey-dresserHeight/2);
+
         // init();
         // this is the room
         g.setColor(Color.orange);
         //created roomD to reference room dimensions
-        g.fillRect(0, 0, width, height); // scale: 500 = 10ft; 50 = 1ft
+        g.fillRect(originX, originY, width, height); // scale: 500 = 10ft; 50 = 1ft
 
         // drawing the twinXL bed at a specified location
         // Bed.init(200,100);
         Bed.BedPaint(g);
-        //drawing dresser
-        Dresser drawers = new Dresser();
-        drawers.init(drex, drey);
+        desk.DeskPaint(g);
         drawers.DresserPaint(g);
+
         repaint();
 
     }
@@ -65,23 +79,56 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
         mouseX = e.getX();
         mouseY = e.getY();
         System.out.println("Main: Mouse at (" + mouseX + "," + mouseY + ")" );
-        clicked_on_bed = (mouseX >= bedx && mouseX <= (bedx + bedWidth)) && (mouseY >= bedy && mouseY <= (bedy + bedHeight));
-        clicked_in_room = (mouseX >= 0 && mouseX < width) && (mouseY < height && mouseY >= 0);
-        clicked_on_dresser = (mouseX >= drex && mouseX <= drex+dresserWidth) && (mouseY >= drey && mouseY <= drey +dresserHeight);
+
+
+        if(!clicked_on_desk && !clicked_on_dresser){
+          clicked_on_bed = (mouseX >= (bedx-bedWidth/2) && mouseX <= (bedx + bedWidth/2)) && (mouseY >= (bedy-bedHeight/2) && mouseY <= (bedy + bedHeight/2));
+          System.out.println("checking bed");
+        }
+
+        if(!clicked_on_bed && !clicked_on_dresser){
+          clicked_on_desk = (mouseX >= (deskx-deskWidth/2) && mouseX <= (deskx + deskWidth/2)) && (mouseY >= (desky-deskHeight/2) && mouseY <= (desky + deskHeight/2));
+          System.out.println("checking desk");
+        }
+        if(!clicked_on_desk && !clicked_on_bed){
+          clicked_on_dresser = (mouseX >= (drex-dresserWidth/2) && mouseX <= (drex + dresserWidth/2)) && (mouseY >= (drey-dresserHeight/2) && mouseY <= (drey + dresserHeight/2));
+          System.out.println("checking dresser");
+        }
+        clicked_in_room = (mouseX >= originX && mouseX < originX+width) && (mouseY < originY+height && mouseY >= originY);
+
         System.out.println("clicked_on_bed:"+clicked_on_bed);
         System.out.println("clicked_in_room:"+clicked_in_room);
+        System.out.println("clicked_on_desk:"+clicked_on_desk);
+        System.out.println("clicked_on_dresser:"+clicked_on_dresser);
+
+        //((mouseX>=bedWidth/2)||(mouseX<width-bedWidth/2)||(mouseY>bedHeight/2)||(mouseY<bedHeight/2))
         if (clicked_in_room) {
             if(clicked_on_bed){
-                System.out.println("on bed main");
-                // this if statement has to be changed bc it's currently hardcoded to the room's
-                // specs
-                // if (mouseX > 200 && mouseX < 542 && mouseY < 267 && mouseY > 100) {
+              System.out.println("on bed main");
+              if(mouseX>=originX+bedWidth/2 && mouseX<=originX+width-bedWidth/2){
                 bedx = mouseX;
+              }
+              if(mouseY<=originY+height-bedHeight/2 && mouseY>=originY+bedHeight/2){
                 bedy = mouseY;
-                // }
+              }
+            }
+            if(clicked_on_desk){
+                System.out.println("on desk main");
+                if(mouseX>=originX+deskWidth/2 && mouseX<=originX+width-deskWidth/2){
+                  deskx = mouseX;
+                }
+                if(mouseY<=originY+height-deskHeight/2 && mouseY>=originY+deskHeight/2){
+                  desky = mouseY;
+                }
             }
             if(clicked_on_dresser){
-                System.out.println("dresser clicked");
+              System.out.println("on dresser main");
+              if(mouseX>=originX+dresserWidth/2 && mouseX<=originX+width-dresserWidth/2){
+                drex = mouseX;
+              }
+              if(mouseY<=originY+height-dresserHeight/2 && mouseY>=originY+dresserHeight/2){
+                drey = mouseY;
+              }
             }
             repaint();
         }
@@ -94,6 +141,7 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
         clicked_in_room = (mouseX >= 0 && mouseX < width) && (mouseY < height && mouseY >= 0);
         System.out.println("Bedx:"+bedx+", Bedy:"+bedy );
         System.out.println("clicked_on_bed:"+clicked_on_bed);
+        //System.out.println("clicked_on_desk:"+clicked_on_desk);
         System.out.println("clicked_in_room:"+clicked_in_room);
         clicked_on_bed = false;
         clicked_in_room = false;*/
@@ -103,6 +151,7 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
     }
 
     public void mouseExited(MouseEvent e) {
+      /*
         mouseX = e.getX();
         mouseY = e.getY();
         clicked_on_bed = (mouseX >= bedx && mouseX <= (bedx + bedWidth)) && (mouseY >= bedy && mouseY <= (bedy + bedHeight));
@@ -116,6 +165,7 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
             bedy = mouseY;
             repaint();
         }
+        */
     }
 
     public void mouseReleased(MouseEvent e) {
@@ -123,16 +173,11 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
         //are not great
         mouseX = e.getX();
         mouseY = e.getY();
-        clicked_on_bed = (mouseX >= bedx && mouseX <= (bedx + bedWidth)) && (mouseY >= bedy && mouseY <= (bedy + bedHeight));
-        clicked_in_room = (mouseX >= 0 && mouseX < width) && (mouseY < height && mouseY >= 0);
-        if (clicked_on_bed && clicked_in_room){
-            clicked_on_bed = false;
-            clicked_in_room = false;
-            System.out.println("released: should draw");
-            bedx = mouseX;
-            bedy = mouseY;
-            repaint();
-        }
+        clicked_on_bed = false;
+        clicked_in_room = false;
+        clicked_on_desk = false;
+        clicked_on_dresser = false;
+        repaint();
     }
 
     public void mousePressed(MouseEvent e) {

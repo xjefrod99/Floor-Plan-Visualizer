@@ -1,12 +1,16 @@
 import java.applet.Applet;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.io.*;
 import java.awt.event.*;
 
-public class Dresser extends Applet implements MouseMotionListener, MouseListener{
-    boolean clicked_on_dresser = false;
+public class Desk extends Applet implements MouseMotionListener, MouseListener{
+    boolean clicked_on_desk = false;
     int locationx, locationy, mouseX, mouseY;
-    int dresserWidth = 149;
-    int dresserHeight = 95;
+    int deskWidth = 198;
+    int deskHeight = 105;
 
     public void init(int locx, int locy) {
         locationx = locx;
@@ -14,18 +18,19 @@ public class Dresser extends Applet implements MouseMotionListener, MouseListene
         addMouseMotionListener(this);
         addMouseListener(this);
     }
-    //this function paints the dresser
-    public void DresserPaint(Graphics g){
-        g.setColor(Color.red);
-        g.fillRect(locationx,locationy,dresserWidth,dresserHeight);
+    //this function just paints the normal TwinXL bed at any given coordinates
+    public void DeskPaint(Graphics g){
+        //twin XL are 38in X 80in
+        g.setColor(Color.blue);
+        g.fillRect(locationx,locationy,deskWidth,deskHeight); //so the w = 158.33 and l = 333.33 but trying to figure out how to pass a double to fillRect
         g.setColor(Color.black);
-        g.drawRect(locationx,locationy,dresserWidth,dresserHeight);
+        g.drawRect(locationx,locationy,deskWidth,deskHeight);
     }
-    public void rotateDresser(Graphics g){
-        int temp = dresserWidth;
-        dresserWidth = dresserHeight;
-        dresserHeight = temp;
-        this.DresserPaint(g);
+    public void rotateDesk(Graphics g){
+        int temp = deskWidth;
+        deskWidth = deskHeight;
+        deskHeight = temp;
+        this.DeskPaint(g);
     }
 
     public void mouseMoved(MouseEvent e) {}
@@ -47,16 +52,5 @@ public class Dresser extends Applet implements MouseMotionListener, MouseListene
     }
     public void mousePressed(final MouseEvent e) {
     }
-    public void keyPressed( KeyEvent e ) {
-        //perhaps use this part to make it rotate, but the console did not register whena key was pressed
-        //call this.rotateBed() if 'B' is pressed
-        int ch = e.getKeyCode();
-
-        System.out.println(ch);
-        repaint();
-
-    }
-    public void keyReleased( KeyEvent e ) { }
-    public void keyTyped( KeyEvent e ) {  }
 
 }
