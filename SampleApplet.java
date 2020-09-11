@@ -19,6 +19,7 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
     int bedHeight = 333;
     int deskWidth = 198;
     int deskHeight = 105;
+    boolean rotateBed = false;
     public void init() {
         bedx = originX+bedWidth/2;
         bedy = originY+bedHeight/2;
@@ -39,6 +40,9 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
         // creating a new TwinXL bed
         Twin Bed = new Twin();
         Bed.init(bedx-bedWidth/2, bedy-bedHeight/2);
+        if(rotateBed){
+            Bed.rotate_Bed(g);
+        }
         // init();
         // creating a new TwinXL bed
         Desk desk = new Desk();
@@ -135,18 +139,26 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
     }
 
     public void mouseClicked(MouseEvent e) {
-        /*mouseX = e.getX();
+        mouseX = e.getX();
         mouseY = e.getY();
-        clicked_on_bed = (mouseX >= bedx && mouseX <= (bedx + bedWidth)) && (mouseY >= bedy && mouseY <= (bedy + bedHeight));
-        clicked_in_room = (mouseX >= 0 && mouseX < width) && (mouseY < height && mouseY >= 0);
+        clicked_on_bed = (mouseX >= (bedx-bedWidth/2) && mouseX <= (bedx + bedWidth/2)) && (mouseY >= (bedy-bedHeight/2) && mouseY <= (bedy + bedHeight/2));
+        clicked_on_desk = (mouseX >= (deskx-deskWidth/2) && mouseX <= (deskx + deskWidth/2)) && (mouseY >= (desky-deskHeight/2) && mouseY <= (desky + deskHeight/2));
+        clicked_on_dresser = (mouseX >= (drex-dresserWidth/2) && mouseX <= (drex + dresserWidth/2)) && (mouseY >= (drey-dresserHeight/2) && mouseY <= (drey + dresserHeight/2));
+        clicked_in_room = (mouseX >= originX && mouseX < originX+width) && (mouseY < originY+height && mouseY >= originY);
         System.out.println("Bedx:"+bedx+", Bedy:"+bedy );
         System.out.println("clicked_on_bed:"+clicked_on_bed);
-        //System.out.println("clicked_on_desk:"+clicked_on_desk);
-        System.out.println("clicked_in_room:"+clicked_in_room);
+        System.out.println("clicked_on_desk:"+clicked_on_desk);
+        System.out.println("clicked_on_dresser:"+clicked_on_dresser);
+        if(clicked_on_bed){
+            rotateBed = !rotateBed;
+            System.out.println("TRIED TO ROTATE");
+        }
+        clicked_on_desk = false;
+        clicked_on_dresser = false;
         clicked_on_bed = false;
-        clicked_in_room = false;*/
+        clicked_in_room = false;
+        repaint();
     }
-
     public void mouseEntered(MouseEvent e) {
     }
 
