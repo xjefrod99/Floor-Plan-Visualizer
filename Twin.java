@@ -60,6 +60,7 @@ public class Twin extends Applet implements MouseMotionListener, MouseListener{
         System.out.println("bedWidth" + bedWidth);
         System.out.println("bedHeight" + bedHeight);
         System.out.println(rotateBed);
+
     }
 
     public void mouseMoved(MouseEvent e) {}

@@ -7,6 +7,7 @@ public class Dresser extends Applet implements MouseMotionListener, MouseListene
     int locationx, locationy, mouseX, mouseY;
     int dresserWidth = 149;
     int dresserHeight = 95;
+    boolean rotateDresser = false;
 
     public void init(int locx, int locy) {
         locationx = locx;
@@ -21,11 +22,12 @@ public class Dresser extends Applet implements MouseMotionListener, MouseListene
         g.setColor(Color.black);
         g.drawRect(locationx,locationy,dresserWidth,dresserHeight);
     }
-    public void rotateDresser(Graphics g){
+
+    public void rotate_Dresser(Graphics g){
+        rotateDresser = !rotateDresser;
         int temp = dresserWidth;
         dresserWidth = dresserHeight;
         dresserHeight = temp;
-        this.DresserPaint(g);
     }
 
     public void mouseMoved(MouseEvent e) {}

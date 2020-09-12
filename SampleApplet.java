@@ -9,8 +9,8 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
     boolean clicked_in_room = false;
     boolean clicked_on_dresser = false;
     int bedx, bedy, mouseX, mouseY, drex, drey, deskx, desky;
-    int height = 500;
-    int width = 600;
+    int height = 400;
+    int width = 500;
     int originX = 100;
     int originY = 100;
     int dresserWidth = 149;
@@ -20,6 +20,9 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
     int deskWidth = 198;
     int deskHeight = 105;
     boolean rotateBed = false;
+    boolean rotateDesk = false;
+    boolean rotateDresser = false;
+
     public void init() {
         bedx = originX+bedWidth/2;
         bedy = originY+bedHeight/2;
@@ -35,6 +38,7 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
         setVisible( true );
     }
 
+
     public void paint(Graphics g) {
         // init();
         // creating a new TwinXL bed
@@ -47,10 +51,15 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
         // creating a new TwinXL bed
         Desk desk = new Desk();
         desk.init(deskx-deskWidth/2, desky-deskHeight/2);
+        if(rotateDesk){
+            desk.rotate_Desk(g);
+        }
 
         Dresser drawers = new Dresser();
         drawers.init(drex-dresserWidth/2, drey-dresserHeight/2);
-
+        if(rotateDresser){
+            drawers.rotate_Dresser(g);
+        }
         // init();
         // this is the room
         g.setColor(Color.orange);
@@ -151,7 +160,23 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
         System.out.println("clicked_on_dresser:"+clicked_on_dresser);
         if(clicked_on_bed){
             rotateBed = !rotateBed;
+            int temp = bedWidth;
+            bedWidth = bedHeight;
+            bedHeight = temp;
             System.out.println("TRIED TO ROTATE");
+        }
+        if(clicked_on_desk){
+            rotateDesk = !rotateDesk;
+            int temp = deskWidth;
+            deskWidth = deskHeight;
+            deskHeight = temp;
+            System.out.println("TRIED TO ROTATE");
+        }
+        if(clicked_on_dresser){
+            rotateDresser = !rotateDresser;
+            int temp = dresserWidth;
+            dresserWidth = dresserHeight;
+            dresserHeight = temp;
         }
         clicked_on_desk = false;
         clicked_on_dresser = false;

@@ -11,6 +11,7 @@ public class Desk extends Applet implements MouseMotionListener, MouseListener{
     int locationx, locationy, mouseX, mouseY;
     int deskWidth = 198;
     int deskHeight = 105;
+    boolean rotateDesk = false;
 
     public void init(int locx, int locy) {
         locationx = locx;
@@ -26,11 +27,11 @@ public class Desk extends Applet implements MouseMotionListener, MouseListener{
         g.setColor(Color.black);
         g.drawRect(locationx,locationy,deskWidth,deskHeight);
     }
-    public void rotateDesk(Graphics g){
+    public void rotate_Desk(Graphics g){
+        rotateDesk = !rotateDesk;
         int temp = deskWidth;
         deskWidth = deskHeight;
         deskHeight = temp;
-        this.DeskPaint(g);
     }
 
     public void mouseMoved(MouseEvent e) {}
