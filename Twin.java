@@ -9,7 +9,7 @@ import java.awt.event.*;
 public class Twin extends Applet implements MouseMotionListener, MouseListener{
     boolean clicked_on_bed = false;
     int locationx, locationy, mouseX, mouseY;
-    boolean rotateBed = false;
+    int rotateBed = 0;
     int bedWidth = 158;
     int bedHeight = 333;
     int pillowL = 100;
@@ -23,19 +23,46 @@ public class Twin extends Applet implements MouseMotionListener, MouseListener{
     }
     //this function just paints the normal TwinXL bed at any given coordinates
     public void BedPaint(Graphics g){
-        if(rotateBed){
+        if(rotateBed==1){
             g.setColor(Color.blue);
-            g.fillRect(locationx,locationy, bedWidth, bedHeight); //so the w = 158.33 and l = 333.33 but trying to figure out how to pass a double to fillRect
+            g.fillRect(locationx,locationy, bedHeight, bedWidth); //so the w = 158.33 and l = 333.33 but trying to figure out how to pass a double to fillRect
+            g.setColor(Color.black);
+            g.drawRect(locationx,locationy,bedHeight,bedWidth);
+            //drawing pillow
+            g.setColor(Color.pink);
+            g.fillRect((locationx + 10),locationy + 30, pillowW ,pillowL);
+            //drawing blanket
+            g.setColor(Color.pink);
+            g.fillRect(locationx+blanket,locationy,bedHeight-blanket, bedWidth);
+            //System.out.println(rotateBed);
+        }
+        if(rotateBed==2){
+          //twin XL are 38in X 80in
+            g.setColor(Color.blue);
+            g.fillRect(locationx,locationy,bedWidth,bedHeight); //so the w = 158.33 and l = 333.33 but trying to figure out how to pass a double to fillRect
             g.setColor(Color.black);
             g.drawRect(locationx,locationy,bedWidth,bedHeight);
             //drawing pillow
             g.setColor(Color.pink);
-            g.fillRect((locationx + 10),locationy + 30, pillowL ,pillowW);
+            g.fillRect((locationx + 30),locationy + bedHeight - pillowW - 10, pillowL ,pillowW);
             //drawing blanket
             g.setColor(Color.pink);
-            g.fillRect(locationx+blanket,locationy,bedWidth-blanket, bedHeight);
+            g.fillRect(locationx,locationy,bedWidth,bedHeight- blanket);
         }
-        else{
+        if(rotateBed==3){
+            g.setColor(Color.blue);
+            g.fillRect(locationx,locationy, bedHeight, bedWidth); //so the w = 158.33 and l = 333.33 but trying to figure out how to pass a double to fillRect
+            g.setColor(Color.black);
+            g.drawRect(locationx,locationy,bedHeight,bedWidth);
+            //drawing pillow
+            g.setColor(Color.pink);
+            g.fillRect((locationx + bedHeight - pillowW -10),locationy + 30, pillowW ,pillowL);
+            //drawing blanket
+            g.setColor(Color.pink);
+            g.fillRect(locationx,locationy,bedHeight-blanket, bedWidth);
+            //System.out.println(rotateBed);
+        }
+        else if(rotateBed==0){
             //twin XL are 38in X 80in
             g.setColor(Color.blue);
             g.fillRect(locationx,locationy,bedWidth,bedHeight); //so the w = 158.33 and l = 333.33 but trying to figure out how to pass a double to fillRect
@@ -46,21 +73,13 @@ public class Twin extends Applet implements MouseMotionListener, MouseListener{
             g.fillRect((locationx + 30),locationy + 10, pillowL ,pillowW);
             //drawing blanket
             g.setColor(Color.pink);
-            g.fillRect(locationx,locationy +blanket,bedWidth,bedHeight- blanket);}
-            rotateBed = false;
-    }
-    public void rotate_Bed(Graphics g){
-        rotateBed = !rotateBed;
-        int temp = bedWidth;
-        bedWidth = bedHeight;
-        bedHeight = temp;
-        int temp1 = pillowL;
-        pillowL = pillowW;
-        pillowW = temp1;
-        System.out.println("bedWidth" + bedWidth);
-        System.out.println("bedHeight" + bedHeight);
-        System.out.println(rotateBed);
+            g.fillRect(locationx,locationy +blanket,bedWidth,bedHeight- blanket);
+            //System.out.println(rotateBed);
+        }
 
+    }
+    public void rotate_Bed(Graphics g, int count){
+        rotateBed = count;
     }
 
     public void mouseMoved(MouseEvent e) {}

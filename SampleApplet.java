@@ -19,9 +19,9 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
     int bedHeight = 333;
     int deskWidth = 198;
     int deskHeight = 105;
-    boolean rotateBed = false;
     boolean rotateDesk = false;
     boolean rotateDresser = false;
+    int bedCount = 0;
 
     public void init() {
         bedx = originX+bedWidth/2;
@@ -44,9 +44,8 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
         // creating a new TwinXL bed
         Twin Bed = new Twin();
         Bed.init(bedx-bedWidth/2, bedy-bedHeight/2);
-        if(rotateBed){
-            Bed.rotate_Bed(g);
-        }
+        //System.out.println("input: " + bedCount);
+        Bed.rotate_Bed(g, bedCount);
         // init();
         // creating a new TwinXL bed
         Desk desk = new Desk();
@@ -159,17 +158,14 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
         System.out.println("clicked_on_desk:"+clicked_on_desk);
         System.out.println("clicked_on_dresser:"+clicked_on_dresser);
         if(clicked_on_bed){
-            rotateBed = !rotateBed;
+            bedCount += 1;
+            if(bedCount==4){
+              bedCount=0;
+            }
+            System.out.println(bedCount);
             int temp = bedWidth;
             bedWidth = bedHeight;
             bedHeight = temp;
-            System.out.println("TRIED TO ROTATE");
-        }
-        if(clicked_on_desk){
-            rotateDesk = !rotateDesk;
-            int temp = deskWidth;
-            deskWidth = deskHeight;
-            deskHeight = temp;
             System.out.println("TRIED TO ROTATE");
         }
         if(clicked_on_dresser){
@@ -177,6 +173,12 @@ public class SampleApplet extends Applet implements MouseMotionListener, MouseLi
             int temp = dresserWidth;
             dresserWidth = dresserHeight;
             dresserHeight = temp;
+        }
+        if(clicked_on_desk){
+            rotateDesk = !rotateDesk;
+            int temp = deskWidth;
+            deskWidth = deskHeight;
+            deskHeight = temp;
         }
         clicked_on_desk = false;
         clicked_on_dresser = false;
